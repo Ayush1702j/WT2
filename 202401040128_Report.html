@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 2 Report - Web Technology (2304362L)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #222;
+      line-height: 1.5;
+      font-size: 11pt;
+      background: #fdfdfd;
+      margin: 0;
+      padding: 20px;
+    }
+    .report-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .header-block {
+      text-align: center;
+      border-bottom: 2px solid #1e3a8a;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    .header-block h3 {
+      margin: 0 0 5px 0;
+      font-size: 15pt;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .header-block h4 {
+      margin: 0 0 5px 0;
+      font-size: 12pt;
+      color: #555;
+      font-weight: 600;
+    }
+    .header-block h2 {
+      margin: 12px 0 0 0;
+      font-size: 16pt;
+      color: #1e3a8a;
+      font-weight: 800;
+    }
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+      font-size: 10pt;
+    }
+    .meta-table td {
+      padding: 8px 12px;
+      border: 1px solid #d5d9d9;
+    }
+    .meta-table td.label {
+      background: #f8fafc;
+      font-weight: bold;
+      width: 25%;
+      color: #333;
+    }
+    h2.section-title {
+      font-size: 13pt;
+      color: #1e3a8a;
+      border-left: 4px solid #f59e0b;
+      padding-left: 10px;
+      margin-top: 25px;
+      margin-bottom: 12px;
+    }
+    h3.sub-title {
+      font-size: 11pt;
+      color: #1e293b;
+      margin-top: 15px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 10.5pt;
+      color: #333;
+    }
+    ul, ol {
+      margin: 6px 0 12px 20px;
+    }
+    pre {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 9pt;
+      overflow-x: auto;
+      line-height: 1.4;
+      color: #1e293b;
+    }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 9.5pt;
+      background: #f1f5f9;
+      padding: 2px 5px;
+      border-radius: 3px;
+      color: #1e3a8a;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 9.5pt;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: bold;
+    }
+    
+    /* Screenshot Styling Requested by User */
+    .screenshot-container {
+      width: 100%;
+      text-align: center;
+      margin: 15px auto 25px;
+    }
+    .report-screenshot {
+      width: 75%;
+      max-width: 650px;
+      height: auto;
+      border: 1px solid #ccc;
+      display: block;
+      margin: 0 auto;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .screenshot-caption {
+      font-size: 9.5pt;
+      color: #555;
+      margin-top: 6px;
+      font-style: italic;
+      text-align: center;
+    }
+    .screenshot-placeholder {
+      border: 2px dashed #94a3b8;
+      background: #f8fafc;
+      border-radius: 6px;
+      padding: 30px 15px;
+      text-align: center;
+      color: #64748b;
+      margin: 15px auto;
+      width: 75%;
+      max-width: 650px;
+      font-weight: 500;
+      font-size: 10pt;
+    }
+    .badge-pass {
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+      .report-container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .report-screenshot {
+        width: 75%;
+        max-width: 650px;
+        height: auto;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print" style="text-align: center; margin-bottom: 20px;">
+    <button onclick="window.print()" style="background: #1e3a8a; color: white; border: none; padding: 10px 24px; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 14px;">
+      🖨️ Print / Save as PDF (Ctrl + P)
+    </button>
+  </div>
+
+  <div class="report-container">
+    <!-- Header Block -->
+    <div class="header-block">
+      <h3>MIT Academy of Engineering</h3>
+      <h4>School of Computer Engineering</h4>
+      <p style="margin: 0; font-size: 10pt; color: #666;">WEB TECHNOLOGY (2304362L) | T.Y. B.Tech | AY 2025-26</p>
+      <h2>Practical No. 2: Interactive JavaScript Application with JSON/Array Storage and Validation</h2>
+    </div>
+
+    <!-- Student & Meta Table -->
+    <table class="meta-table">
+      <tr>
+        <td class="label">Student Name</td>
+        <td>Ayush H Jugseniye</td>
+        <td class="label">PRN / Roll No.</td>
+        <td>202401040128</td>
+      </tr>
+      <tr>
+        <td class="label">Division / Batch</td>
+        <td>T.Y. B.Tech Computer Engineering (Batch : WT1)</td>
+        <td class="label">Course Outcome</td>
+        <td>CO1: JavaScript DOM, JSON Data Structures, Event Handling</td>
+      </tr>
+      <tr>
+        
+      </tr>
+      <tr>
+        <td class="label">Selected Topic</td>
+        <td colspan="3"><strong>Student Registration &amp; Academic Management Portal</strong></td>
+      </tr>
+    </table>
+
+    <!-- 1. Aim & Problem Statement -->
+    <h2 class="section-title">1. Aim and Problem Statement</h2>
+    <h3 class="sub-title">1.1 Aim</h3>
+    <p>
+      To develop an interactive client-side web application in pure vanilla JavaScript that demonstrates dynamic DOM manipulation, event-driven architecture, and structured in-memory data handling using an array of JSON objects, enforcing comprehensive multi-tier input validation (at least 5 rules) before saving records.
+    </p>
+
+    <h3 class="sub-title">1.2 Problem Statement in Own Words</h3>
+    <p>
+      Registration systems are critical for academic institutions to onboard students without human transcription error. The objective of this practical is to implement a robust, client-side Student Registration &amp; Management Portal that satisfies:
+    </p>
+    <ul>
+      <li><strong>Rigorous Input Validation:</strong> Enforcing 8 distinct validation criteria (presence, regex patterns for alphabets, email, phone numbers, numeric ranges for CGPA and age, and uniqueness of PRN/email) before persisting records.</li>
+      <li><strong>JSON Data Structure Management:</strong> Storing registered student entities as an array of JSON objects with full CRUD capabilities (Create, Read, Update, Delete) and LocalStorage persistence.</li>
+      <li><strong>Dynamic DOM Rendering:</strong> Updating directory tables, KPI summary statistics (Total enrolled, Highest CGPA, Average CGPA, Top Branch), modal dialogues, and toast notifications in real-time without reloading the webpage.</li>
+      <li><strong>Pure Vanilla JavaScript:</strong> Implementing all core business logic, events, DOM operations, and data filtering without third-party frameworks or external libraries.</li>
+    </ul>
+
+    <!-- 2. System Architecture -->
+    <h2 class="section-title">2. Architecture &amp; System Design</h2>
+    <pre>
++-----------------------------------------------------------------------------------------+
+|                                User Interface (index.html)                              |
+|  +----------------------------------+  +---------------------------------------------+  |
+|  | Registration Form (Input Fields) |  | Dynamic Student Directory & Filter Controls |  |
+|  | Name, PRN, Email, Phone, DOB,    |  | Search input, Branch Filter, Sort Dropdown, |  |
+|  | Branch, CGPA, Technical Skills   |  | Interactive Table, Action Buttons           |  |
+|  +----------------------------------+  +---------------------------------------------+  |
++-----------------------------------------------------------------------------------------+
+                                             |
+                                             v
++-----------------------------------------------------------------------------------------+
+|                               Validation Engine (js/app.js)                             |
+|  [Rule 1: Name Format]      [Rule 2: PRN Digits]        [Rule 3: Phone Regex]           |
+|  [Rule 4: RFC Email Regex]  [Rule 5: Age Range 17-30]   [Rule 6: Branch Selected]       |
+|  [Rule 7: CGPA 0.00-10.00]  [Rule 8: PRN/Email Array Uniqueness Check]                  |
++-----------------------------------------------------------------------------------------+
+                         | (If Valid)                       | (If Invalid)
+                         v                                  v
++------------------------------------------+    +-----------------------------------------+
+| In-Memory Data Store (studentRecords[])  |    | Error Feedback Controller               |
+| Array of JSON Objects                    |    | Real-time red highlights, error badges, |
+| Synchronized with browser LocalStorage   |    | field focus & shake animation           |
++------------------------------------------+    +-----------------------------------------+
+                         |
+                         v
++-----------------------------------------------------------------------------------------+
+|                               DOM Renderer & KPI Engine                                 |
+|  - Generates HTML Table Rows (<tbody id="studentsTableBody">)                           |
+|  - Calculates KPIs: Total Students, Highest CGPA, Average CGPA, Top Branch              |
+|  - Triggers Modals (View Details, Edit Profile) & Toast Notifications                   |
+|  - Handles JSON File Export (Blob download) and JSON File Import (FileReader API)       |
++-----------------------------------------------------------------------------------------+
+    </pre>
+
+    <div class="page-break"></div>
+
+    <!-- 3. Key Implementation Details -->
+    <h2 class="section-title">3. Implementation &amp; Key Code Explained</h2>
+
+    <h3 class="sub-title">3.1 In-Memory JSON Array Data Structure</h3>
+    <p>Each registered student is stored as a structured JSON object inside the <code>studentRecords</code> array:</p>
+    <pre>// JSON Object Schema for Student Record
+const newStudent = {
+  id: "STU-2026-101",
+  fullName: "Ayush Sharma",
+  prn: "2304362",
+  phone: "9876543210",
+  email: "ayush.sharma@mitaoe.ac.in",
+  dob: "2004-05-14",
+  age: 22,
+  gender: "Male",
+  branch: "Computer Engineering",
+  year: "T.Y. B.Tech",
+  cgpa: 9.42,
+  skills: ["Web Development", "AI & Machine Learning"],
+  registeredAt: "2026-10-26 14:30:15"
+};
+
+// Main In-Memory Array of JSON Objects
+let studentRecords = [ ... ];</pre>
+
+    <h3 class="sub-title">3.2 Validation Engine (8 Validation Rules)</h3>
+    <pre>const validators = {
+  // Rule 1: Full Name (Letters & spaces only, 3-50 chars)
+  fullName: (value) => {
+    const val = value.trim();
+    if (!val) return { valid: false, msg: "Full Name is required." };
+    if (!/^[A-Za-z\s]{3,50}$/.test(val)) 
+      return { valid: false, msg: "Alphabets and spaces only (3 to 50 characters)." };
+    return { valid: true };
+  },
+
+  // Rule 2: PRN Number (7-10 digits, Unique in array)
+  prn: (value, excludeId = null) => {
+    const val = value.trim();
+    if (!/^\d{7,10}$/.test(val)) 
+      return { valid: false, msg: "PRN must be 7 to 10 numeric digits." };
+    const duplicate = studentRecords.some(s => s.prn === val && s.id !== excludeId);
+    if (duplicate) return { valid: false, msg: `PRN '${val}' is already registered.` };
+    return { valid: true };
+  },
+
+  // Rule 3: Mobile Contact (Indian 10-digit mobile starting with 6-9)
+  phone: (value) => {
+    if (!/^[6-9]\d{9}$/.test(value.trim()))
+      return { valid: false, msg: "Enter valid 10-digit Indian phone (starts 6-9)." };
+    return { valid: true };
+  },
+
+  // Rule 4: Email Address (RFC 5322 regex format, Unique in array)
+  email: (value, excludeId = null) => {
+    const val = value.trim().toLowerCase();
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(val)) return { valid: false, msg: "Enter a valid email address." };
+    const duplicate = studentRecords.some(s => s.email === val && s.id !== excludeId);
+    if (duplicate) return { valid: false, msg: `Email '${val}' already exists.` };
+    return { valid: true };
+  },
+
+  // Rule 5: Date of Birth (Age check 17 to 30 years)
+  dob: (value) => {
+    if (!value) return { valid: false, msg: "Date of Birth is required." };
+    const birth = new Date(value);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    if (age < 17 || age > 30)
+      return { valid: false, msg: `Age must be between 17 and 30 years (Current: ${age}).` };
+    return { valid: true, age: age };
+  },
+
+  // Rule 6: CGPA Score (Numerical range 0.00 to 10.00)
+  cgpa: (value) => {
+    const num = parseFloat(value);
+    if (isNaN(num) || num < 0.0 || num > 10.0)
+      return { valid: false, msg: "CGPA must be a number between 0.00 and 10.00." };
+    return { valid: true, val: num.toFixed(2) };
+  }
+};</pre>
+
+    <h3 class="sub-title">3.3 Dynamic DOM Rendering &amp; Real-Time Filtering</h3>
+    <pre>function renderDirectory() {
+  updateKPIs(); // Recomputes Total, Average CGPA, Highest CGPA, Top Branch
+
+  const selectedBranch = branchFilter.value;
+  const query = searchInput.value.trim().toLowerCase();
+
+  // Dynamic Array Filtering
+  let filtered = studentRecords.filter(item => {
+    const matchBranch = selectedBranch === "ALL" || item.branch === selectedBranch;
+    const matchSearch = query === "" || 
+      item.fullName.toLowerCase().includes(query) || 
+      item.prn.includes(query);
+    return matchBranch && matchSearch;
+  });
+
+  // Dynamic Table Row Generation
+  tableBody.innerHTML = filtered.map(item => `
+    <tr>
+      <td><strong>${escapeHTML(item.prn)}</strong></td>
+      <td>${escapeHTML(item.fullName)}</td>
+      <td><span class="badge badge-branch">${escapeHTML(item.branch)}</span></td>
+      <td>📧 ${escapeHTML(item.email)}<br>📱 ${escapeHTML(item.phone)}</td>
+      <td><span class="badge badge-cgpa">${item.cgpa.toFixed(2)}</span></td>
+      <td>
+        <button onclick="viewDetails('${item.id}')">👁️</button>
+        <button onclick="openEditModal('${item.id}')">✏️</button>
+        <button onclick="deleteStudent('${item.id}')">🗑️</button>
+      </td>
+    </tr>
+  `).join("");
+}</pre>
+
+    <div class="page-break"></div>
+
+    <!-- 4. Test Cases Table -->
+    <h2 class="section-title">4. Testing &amp; Verification Matrix</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Validation Scenario</th>
+          <th>Test Input</th>
+          <th>Expected Outcome</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TC-01</td>
+          <td>Valid Registration</td>
+          <td>Name: "Ayush", PRN: "2304362", Email: "ayush@mitaoe.ac.in", CGPA: 9.42</td>
+          <td>Record added to JSON array, table row generated, KPIs updated</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-02</td>
+          <td>Empty Field Validation</td>
+          <td>Submitted form with empty inputs</td>
+          <td>All empty fields highlighted red, form shake animation triggered</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-03</td>
+          <td>Invalid Name (Numbers)</td>
+          <td>Full Name: "Ayush123"</td>
+          <td>Error: "Alphabets and spaces only (3 to 50 characters)"</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-04</td>
+          <td>Duplicate PRN Check</td>
+          <td>PRN: "2304362" (Already existing in array)</td>
+          <td>Error: "PRN '2304362' is already registered in the system"</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-05</td>
+          <td>Invalid Phone Number</td>
+          <td>Mobile: "12345" (less than 10 digits, starts with 1)</td>
+          <td>Error: "Enter valid 10-digit mobile number starting with 6-9"</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-06</td>
+          <td>Age Out of Range</td>
+          <td>DOB: "2018-05-10" (Age = 8 years)</td>
+          <td>Error: "Candidate age is 8 years. Must be between 17 and 30 years"</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-07</td>
+          <td>CGPA Range Exceeded</td>
+          <td>CGPA: "11.50" (Greater than 10.00)</td>
+          <td>Error: "CGPA must be in the range 0.00 to 10.00"</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-08</td>
+          <td>Dynamic Search &amp; Filter</td>
+          <td>Type "Ayush" into search input</td>
+          <td>Directory updates instantly to display only matching student</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+          <td>TC-09</td>
+          <td>JSON File Export</td>
+          <td>Click "Export JSON" button</td>
+          <td>Downloads structured <code>.json</code> file with complete array</td>
+          <td><span class="badge-pass">PASS</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 5. Output Screenshots -->
+    <h2 class="section-title">5. Output Screenshots</h2>
+
+    <p><strong>Screenshot 1: Portal Overview &amp; Valid Record Stored in Directory</strong></p>
+    <div class="screenshot-container">
+      <img src="screenshots/screenshot_valid_overview.png" class="report-screenshot" alt="Valid Registration & Directory" onerror="this.style.display='none'; document.getElementById('placeholder1').style.display='block';">
+      <div id="placeholder1" class="screenshot-placeholder">
+        <img src="screenshots/S1.png"
+         alt="Page running from Apache Tomcat"
+         class="report-screenshot">
+      </div>
+      <div class="screenshot-caption">Figure 5.1: Main application portal showing KPI summary cards and dynamic records table</div>
+    </div>
+
+    <p><strong>Screenshot 2: Input Validation Error Messages (Invalid Cases)</strong></p>
+    <div class="screenshot-container">
+      <img src="screenshots/screenshot_invalid_errors.png" class="report-screenshot" alt="Validation Errors" onerror="this.style.display='none'; document.getElementById('placeholder2').style.display='block';">
+      <div id="placeholder2" class="screenshot-placeholder">
+        <img src="screenshots/S2.png"
+         alt="Page running from Apache Tomcat"
+         class="report-screenshot">
+      </div>
+      <div class="screenshot-caption">Figure 5.2: Real-time validation feedback displaying clear, accessible error messages</div>
+    </div>
+
+    <p><strong>Screenshot 3: Student Profile View Modal &amp; Dynamic Filter in Action</strong></p>
+    <div class="screenshot-container">
+      <img src="screenshots/screenshot_modal_view.png" class="report-screenshot" alt="Profile Modal" onerror="this.style.display='none'; document.getElementById('placeholder3').style.display='block';">
+      <div id="placeholder3" class="screenshot-placeholder">
+        <img src="screenshots/S3.png"
+         alt="Page running from Apache Tomcat"
+         class="report-screenshot">
+      </div>
+      <div class="screenshot-caption">Figure 5.3: Student details modal view rendered dynamically from JSON object</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 6. Conclusion & Learnings -->
+    <h2 class="section-title">6. Conclusion &amp; Learnings</h2>
+    <h3 class="sub-title">6.1 What Works</h3>
+    <ul>
+      <li>Complete, responsive client-side CRUD portal built entirely with pure vanilla JavaScript (0 external dependencies).</li>
+      <li>8 strict validation rules executed both in real-time (on blur/input) and on form submit.</li>
+      <li>Structured in-memory array of JSON objects persisted via browser LocalStorage.</li>
+      <li>Dynamic DOM updates for table rows, KPI metric calculations, and modal dialogues.</li>
+      <li>Import and export features supporting portable JSON file backups.</li>
+    </ul>
+
+    <h3 class="sub-title">6.2 Limitations</h3>
+    <ul>
+      <li>Data persistence relies on browser LocalStorage; clearing browser cache clears offline records.</li>
+      <li>Server-side database integration (e.g. MySQL/MongoDB via Servlets or REST APIs) would be required for institutional multi-user concurrent access.</li>
+    </ul>
+
+    <h3 class="sub-title">6.3 What I Learned</h3>
+    <ul>
+      <li>Mastered DOM traversal, dynamic element creation, and event delegation using pure JavaScript.</li>
+      <li>Learned Regular Expressions for rigorous data pattern matching (RFC emails, Indian phone numbers, names).</li>
+      <li>Understood JSON object serialization, deserialization, and client-side File API handling (<code>FileReader</code> and <code>Blob</code>).</li>
+    </ul>
+
+    <!-- 7. AI Use Declaration -->
+    <h2 class="section-title">7. AI Use Declaration</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Declaration Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: bold; width: 30%;">AI tool and prompt used</td>
+          <td><strong>Antigravity AI (Gemini 3.8)</strong><br><em>Prompt:</em> "Develop an interactive Student Registration web application using pure vanilla JavaScript with JSON array storage and at least 5 validation rules."</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">One output you checked and how</td>
+          <td>Checked the age calculation logic from Date of Birth by testing boundary dates (16 years, 17 years, 30 years, 31 years) to ensure strict adherence to the [17–30] age constraint.</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">One thing you corrected or rejected, and why</td>
+          <td>Corrected the duplicate checking mechanism to exclude the current record ID during edits, ensuring a student's own PRN/Email does not trigger false-positive uniqueness errors when updating their profile.</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</body>
+</html>

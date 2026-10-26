@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Registration Portal with JSON Storage and Dynamic Validation - Web Technology Practical 2">
+  <title>Student Registration &amp; Management Portal | WT Practical No. 2</title>
+
+  <!-- Google Fonts: Inter / Segoe UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. PORTAL HEADER
+       ====================================================================== -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="header-branding">
+        <h1>🎓 MIT Academy of Engineering</h1>
+        <p>School of Computer Engineering | Web Technology (2304362L) &bull; Practical No. 2: JavaScript</p>
+      </div>
+      <div class="header-meta">
+        <div class="meta-badge">
+          <div>T.Y. B.Tech &bull;</div>
+          <div style="color: #cbd5e1; font-weight: normal; font-size: 0.78rem;" id="liveClockDisplay">Loading clock...</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       2. MAIN CONTENT AREA
+       ====================================================================== -->
+  <main class="main-wrapper">
+
+    <!-- KPI Summary Cards (Dynamically computed from JSON array) -->
+    <section class="kpi-row" aria-label="Student Registration Statistics">
+      <div class="kpi-card">
+        <div class="kpi-icon blue">👥</div>
+        <div class="kpi-info">
+          <div class="kpi-label">Total Enrolled</div>
+          <div class="kpi-value" id="kpiTotalStudents">0</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon green">⭐</div>
+        <div class="kpi-info">
+          <div class="kpi-label">Highest CGPA</div>
+          <div class="kpi-value" id="kpiHighestCGPA">0.00</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon amber">📊</div>
+        <div class="kpi-info">
+          <div class="kpi-label">Average CGPA</div>
+          <div class="kpi-value" id="kpiAverageCGPA">0.00</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon purple">🏛️</div>
+        <div class="kpi-info">
+          <div class="kpi-label">Top Branch</div>
+          <div class="kpi-value" id="kpiTopBranch" style="font-size: 1.15rem;">None</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Column Grid: Registration Form (Left) & Directory Table (Right) -->
+    <div class="content-grid">
+
+      <!-- ----------------------------------------------------------------
+           LEFT COLUMN: Registration Form with 8 Validation Rules
+           ---------------------------------------------------------------- -->
+      <section class="portal-card" aria-labelledby="formTitle">
+        <div class="card-header">
+          <h2 id="formTitle">📝 Student Registration</h2>
+          <span class="badge" style="background: #e2e8f0; color: #475569;">Validation Active</span>
+        </div>
+
+        <div class="card-body">
+          <form id="studentRegistrationForm" novalidate>
+
+            <!-- 1. Full Name (Rule: Required, Alphabets and spaces, 3-50 chars) -->
+            <div class="form-group" id="groupFullName">
+              <label for="fullName" class="form-label">Full Name <span class="required-star">*</span></label>
+              <div class="input-wrapper">
+                <input type="text" id="fullName" class="form-input" placeholder="e.g. Ayush Sharma" autocomplete="name">
+              </div>
+              <div class="error-message" id="errFullName">Please enter a valid full name (letters only, min 3 characters).</div>
+              <div class="form-hint">Alphabets &amp; spaces only (3 - 50 characters).</div>
+            </div>
+
+            <!-- Row: PRN & Roll No. -->
+            <div class="form-row">
+              <!-- 2. PRN (Rule: Required, 7-10 digits, Unique in JSON array) -->
+              <div class="form-group" id="groupPRN">
+                <label for="prnNumber" class="form-label">PRN Number <span class="required-star">*</span></label>
+                <div class="input-wrapper">
+                  <input type="text" id="prnNumber" class="form-input" placeholder="e.g. 2304362" maxlength="10">
+                </div>
+                <div class="error-message" id="errPRN">Valid 7 to 10 digit unique PRN required.</div>
+              </div>
+
+              <!-- 3. Contact Phone (Rule: Required, 10-digit Indian mobile [6-9]\d{9}) -->
+              <div class="form-group" id="groupPhone">
+                <label for="phoneNumber" class="form-label">Mobile Number <span class="required-star">*</span></label>
+                <div class="input-wrapper">
+                  <input type="tel" id="phoneNumber" class="form-input" placeholder="e.g. 9876543210" maxlength="10">
+                </div>
+                <div class="error-message" id="errPhone">Enter valid 10-digit Indian phone (starts with 6-9).</div>
+              </div>
+            </div>
+
+            <!-- 4. Email Address (Rule: Required, Standard RFC Email Format, Unique) -->
+            <div class="form-group" id="groupEmail">
+              <label for="emailAddress" class="form-label">Email Address <span class="required-star">*</span></label>
+              <div class="input-wrapper">
+                <input type="email" id="emailAddress" class="form-input" placeholder="e.g. ayush@mitaoe.ac.in" autocomplete="email">
+              </div>
+              <div class="error-message" id="errEmail">Please provide a valid unique email address.</div>
+            </div>
+
+            <!-- Row: DOB & Gender -->
+            <div class="form-row">
+              <!-- 5. Date of Birth (Rule: Required, Age must be between 17 and 30) -->
+              <div class="form-group" id="groupDOB">
+                <label for="dob" class="form-label">Date of Birth <span class="required-star">*</span></label>
+                <input type="date" id="dob" class="form-input">
+                <div class="error-message" id="errDOB">Candidate age must be between 17 and 30 years.</div>
+              </div>
+
+              <!-- 6. Gender Selection -->
+              <div class="form-group" id="groupGender">
+                <label class="form-label">Gender <span class="required-star">*</span></label>
+                <div class="radio-group" style="padding-top: 6px;">
+                  <label class="custom-option">
+                    <input type="radio" name="gender" value="Male" checked> Male
+                  </label>
+                  <label class="custom-option">
+                    <input type="radio" name="gender" value="Female"> Female
+                  </label>
+                  <label class="custom-option">
+                    <input type="radio" name="gender" value="Other"> Other
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row: Department Branch & Academic Year -->
+            <div class="form-row">
+              <!-- 7. Branch Dropdown (Rule: Required, cannot be empty) -->
+              <div class="form-group" id="groupBranch">
+                <label for="branchSelect" class="form-label">Department / Branch <span class="required-star">*</span></label>
+                <select id="branchSelect" class="form-select">
+                  <option value="">-- Select Branch --</option>
+                  <option value="Computer Engineering">Computer Engineering</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="AI & Data Science">AI &amp; Data Science</option>
+                  <option value="Electronics & Telecomm">Electronics &amp; Telecomm</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Chemical Engineering">Chemical Engineering</option>
+                </select>
+                <div class="error-message" id="errBranch">Please select an engineering department.</div>
+              </div>
+
+              <!-- 8. Academic Year -->
+              <div class="form-group" id="groupYear">
+                <label for="academicYear" class="form-label">Academic Year <span class="required-star">*</span></label>
+                <select id="academicYear" class="form-select">
+                  <option value="T.Y. B.Tech">T.Y. B.Tech (Semester V/VI)</option>
+                  <option value="Final Year B.Tech">Final Year B.Tech (Sem VII/VIII)</option>
+                  <option value="S.Y. B.Tech">S.Y. B.Tech (Semester III/IV)</option>
+                  <option value="F.Y. B.Tech">F.Y. B.Tech (Semester I/II)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 9. CGPA (Rule: Required, Float number between 0.00 and 10.00) -->
+            <div class="form-group" id="groupCGPA">
+              <label for="cgpaScore" class="form-label">Cumulative GPA (CGPA) <span class="required-star">*</span></label>
+              <div class="input-wrapper">
+                <input type="number" id="cgpaScore" class="form-input" placeholder="e.g. 8.75" step="0.01" min="0" max="10">
+              </div>
+              <div class="error-message" id="errCGPA">CGPA must be a valid number between 0.00 and 10.00.</div>
+              <div class="form-hint">Scale: 0.00 to 10.00 (two decimal places).</div>
+            </div>
+
+            <!-- 10. Technical Interests (Checkboxes) -->
+            <div class="form-group" id="groupSkills">
+              <label class="form-label">Technical Interests (Optional)</label>
+              <div class="checkbox-group">
+                <label class="custom-option">
+                  <input type="checkbox" name="skillInterest" value="Web Development" checked> Web Development
+                </label>
+                <label class="custom-option">
+                  <input type="checkbox" name="skillInterest" value="AI & Machine Learning"> AI / Machine Learning
+                </label>
+                <label class="custom-option">
+                  <input type="checkbox" name="skillInterest" value="Cloud Computing"> Cloud Computing
+                </label>
+                <label class="custom-option">
+                  <input type="checkbox" name="skillInterest" value="Cybersecurity"> Cybersecurity
+                </label>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="btnSubmitForm" style="flex: 2;">
+                <span>💾 Save &amp; Register Student</span>
+              </button>
+              <button type="button" class="btn btn-secondary" id="btnResetForm" style="flex: 1;">
+                <span>↺ Clear</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           RIGHT COLUMN: Dynamic Student Directory (DOM Manipulation from JSON)
+           ---------------------------------------------------------------- -->
+      <section class="portal-card" aria-labelledby="directoryTitle">
+        <div class="card-header">
+          <h2 id="directoryTitle">📋 Registered Students Directory</h2>
+          <div class="filter-actions">
+            <button class="btn btn-secondary btn-sm" id="btnExportJSON" title="Export current array to JSON file">
+              📥 Export JSON
+            </button>
+            <label class="btn btn-secondary btn-sm" style="cursor: pointer; margin-bottom: 0;" title="Import records from a JSON file">
+              📤 Import JSON
+              <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+            </label>
+            <button class="btn btn-danger btn-sm" id="btnClearAll" title="Clear all stored records">
+              🗑️ Clear All
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Filter & Search Controls -->
+          <div class="table-controls">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="filterSearchInput" placeholder="Search by Student Name or PRN...">
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+              <select id="filterBranchSelect" class="form-select" style="width: auto; padding: 7px 12px; font-size: 0.85rem;">
+                <option value="ALL">All Branches</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="AI & Data Science">AI &amp; Data Science</option>
+                <option value="Electronics & Telecomm">Electronics &amp; Telecomm</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Chemical Engineering">Chemical Engineering</option>
+              </select>
+
+              <select id="sortRecordsSelect" class="form-select" style="width: auto; padding: 7px 12px; font-size: 0.85rem;">
+                <option value="date-desc">Newest First</option>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="cgpa-desc">Highest CGPA</option>
+                <option value="prn-asc">PRN (Ascending)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Responsive Data Table -->
+          <div class="table-responsive">
+            <table class="data-table" id="studentsTable">
+              <thead>
+                <tr>
+                  <th>PRN</th>
+                  <th>Student Name</th>
+                  <th>Department</th>
+                  <th>Contact Info</th>
+                  <th>CGPA</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+                <!-- Dynamically populated by js/app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State Container -->
+          <div id="tableEmptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">📂</div>
+            <h4>No Student Records Found</h4>
+            <p>No records match your search criteria. Register a new student or clear filters.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       3. MODALS (View Details & Edit Record)
+       ====================================================================== -->
+
+  <!-- View Student Details Modal -->
+  <div class="modal-backdrop" id="viewStudentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Student Profile Details</h3>
+        <button type="button" class="modal-close" onclick="closeModal('viewStudentModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="viewStudentModalBody">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('viewStudentModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Student Record Modal -->
+  <div class="modal-backdrop" id="editStudentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ Edit Student Record</h3>
+        <button type="button" class="modal-close" onclick="closeModal('editStudentModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editStudentForm" novalidate>
+          <input type="hidden" id="editStudentId">
+
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="editFullName" class="form-input" required>
+            <div class="error-message" id="errEditFullName">Invalid name.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">PRN (Read-Only)</label>
+              <input type="text" id="editPRN" class="form-input" readonly style="background-color: #f1f5f9;">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Phone</label>
+              <input type="tel" id="editPhone" class="form-input" maxlength="10">
+              <div class="error-message" id="errEditPhone">Invalid 10-digit phone.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="editEmail" class="form-input">
+            <div class="error-message" id="errEditEmail">Invalid email address.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <select id="editBranch" class="form-select">
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="AI & Data Science">AI &amp; Data Science</option>
+                <option value="Electronics & Telecomm">Electronics &amp; Telecomm</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Chemical Engineering">Chemical Engineering</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CGPA</label>
+              <input type="number" id="editCGPA" class="form-input" step="0.01" min="0" max="10">
+              <div class="error-message" id="errEditCGPA">Range: 0.00 to 10.00.</div>
+            </div>
+          </div>
+
+          <div class="modal-footer" style="padding: 15px 0 0 0; background: transparent;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('editStudentModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Update Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Pure Vanilla JavaScript (Zero External Libraries for Core Logic) -->
+  <script src="js/app.js"></script>
+</body>
+</html>
