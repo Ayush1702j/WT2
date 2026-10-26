@@ -14,9 +14,7 @@
 | **Division / Batch** | T.Y. B.Tech Computer Engineering (Batch B) |
 | **Practical No.** | Practical No. 2: JavaScript |
 | **Course Outcome** | CO1: JavaScript DOM, JSON Data Structures, Event Handling |
-| **Lab Hours / Marks** | 10 Hours / 10 Marks |
-| **Date of Submission**| 27-10-2026 |
-| **Core Logic** | 100% Pure Vanilla JavaScript (Zero External Libraries) |
+
 
 ---
 
